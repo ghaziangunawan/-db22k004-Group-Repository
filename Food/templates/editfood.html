@@ -1,0 +1,82 @@
+<html>
+
+    <style>
+        .center{
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 30px; 
+    }
+    
+    h1 {text-align: center;}
+    
+    .container{  
+    text-align: center;  
+    padding-top: 25px; 
+    }  
+    .btn{  
+    text-align: center;
+    }  
+    
+    </style>
+
+<body>
+
+
+    <table class="center">
+        <h1>EDIT FOOD</h1>
+        <tr>
+            <td>Food Name: </td>
+            <td>Vanilla Milkshake</td>
+        </tr>
+                
+        <tr>
+            <td>Description: </td>
+            <td> Milkshake with vanilla flavor and ice cream topping</td>
+            <td><input type="text" name="description"></td>
+        </tr>
+    
+        <tr>
+            <td>Stock: </td>
+            <td>5</td>
+            <td><input type="text" name="stock"></td>
+        </tr>
+        
+        <tr>
+            <td>Price: </td>
+            <td>5</td>
+            <td><input type="text" name="price"></td>
+        </tr>
+
+        <tr>
+
+            <td><label for="food_category">Food Category:</label></td>
+                <td><select name="food_category" id="FC">
+                  <option value="FC">Choose</option>
+                  <option value="FC">Appetizer</option>
+                  <option value="FC">Main course</option>
+                  <option value="FC">Dessert</option>
+                  <option value="FC">Beverages</option>
+                  <option value="FC">Snacks</option>
+                </select></td>
+        </tr>
+
+        <tr></tr>
+
+        <tr>
+            <td>Ingredient: </td>
+            <td>Milk</td>
+            <td><input class="btn" type="submit" value="-"></td>
+        </tr>
+
+        
+        <tr>
+        <div class="container">
+            <td><input class="btn" type="submit" value="+"></td>
+        </div>    
+        </tr>
+    </table>
+    
+</body>
+    
+
+</html>

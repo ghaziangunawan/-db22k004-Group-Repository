@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'operationalhours',
     'transaction',
     'deliveryfeeperkm',
+    'Food',
 ]
 
 MIDDLEWARE = [
