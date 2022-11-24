@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'RestaurantCategory',
     'TransactionCourier',
     'Ingredients',
+    'loginlogout',
+    'user',
+    'foodcategory',
+    'transactioncustomer',
 ]
 
 MIDDLEWARE = [

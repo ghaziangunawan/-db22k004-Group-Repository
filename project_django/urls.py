@@ -27,6 +27,10 @@ urlpatterns = [
     path('RestaurantCategory/', include('RestaurantCategory.urls')),
     path('TransactionCourier/', include('TransactionCourier.urls')),
     path('Ingredients/', include('Ingredients.urls')),
+    path('loginlogout/', include('loginlogout.urls')),
+    path('user/', include('user.urls')),
+    path('foodcategory/', include('foodcategory.urls')),
+    path('transactioncustomer/', include('transactioncustomer.urls'))
 ]
 
 # TODO: Implement Routings Here
