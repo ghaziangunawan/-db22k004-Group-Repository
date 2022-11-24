@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'transaction',
     'deliveryfeeperkm',
     'Food',
+    'RestaurantCategory'
 ]
 
 MIDDLEWARE = [
