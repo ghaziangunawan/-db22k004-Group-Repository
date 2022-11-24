@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'RestoPay',
     'operationalhours',
     'transaction',
+    'deliveryfeeperkm',
 ]
 
 MIDDLEWARE = [
