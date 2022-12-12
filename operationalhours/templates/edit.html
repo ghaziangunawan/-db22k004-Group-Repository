@@ -28,13 +28,15 @@
                 <h1>Edit Operational Hours </h1>
             </div>
         </nav>
+        
 
         <form method="POST" action="" id="create_form">
             {% csrf_token %}
             <div class="container">
                 <div class="row mt-3 mb-2">
                     <p style="margin-right:44px;">Select Day</p>
-                    <select name="" id="day-group">
+                    {% if initday == 'Monday' %}
+                    <select name="day" id="day-group">
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>
                         <option value="Thursday">Thursday</option>
@@ -42,14 +44,76 @@
                         <option value="Saturday">Saturday</option>
                         <option value="Sunday">Sunday</option>
                     </select>
+                    {% endif %}
+                    {% if initday == 'Tuesday' %}
+                    <select name="day" id="day-group">
+                        <option value="Monday">Monday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                    {% endif %}
+                    {% if initday == 'Wednesday' %}
+                    <select name="day" id="day-group">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                    {% endif %}
+                    {% if initday == 'Thursday' %}
+                    <select name="day" id="day-group">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                    {% endif %}
+                    {% if initday == 'Friday' %}
+                    <select name="day" id="day-group">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                    {% endif %}
+                    {% if initday == 'Saturday' %}
+                    <select name="day" id="day-group">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                    {% endif %}
+                    {% if initday == 'Sunday' %}
+                    <select name="day" id="day-group">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                    </select>
+                    {% endif %}
+                 
                 </div>   
                 <div class="row mb-2">
                         <p style="margin-right:20px;">Opening time: </p>
-                        <input type="time" id="appt" name="appt">
+                        <input name='ophour' type="time" id="appt" name="appt">
                 </div> 
                 <div class="row">
                     <p style="margin-right:26px;">Closing time: </p>
-                    <input type="time" id="appt2" name="appt2">
+                    <input name='closehour' type="time" id="appt2" name="appt2">
                 </div> 
             </div>
             

@@ -29,15 +29,15 @@
             </div>
         </nav>
 
-        <h3 style="margin-left: 40px; margin-top: 50px">Your RestoPay Balance : $balance</h3>
+        <h3 style="margin-left: 40px; margin-top: 50px">Your RestoPay Balance : {{balance}}</h3>
 
         <div class="row justify-content-center" style="margin-top: 300px;">
-            <button  type="button" class="btn btn-primary custom">Top Up</button>
+            <a href="{% url 'restopay:show_topup'  %}" class="btn btn-primary " role="button" aria-disabled="true">Top up</a>
         </div>
                 
             
         <div class="row justify-content-center" style="margin-top: 20px;">
-            <button type="button " class="btn btn-warning text-white custom">Withdraw</button>
+            <a href="{% url 'restopay:show_withdraw'  %}" class="btn btn-warning " role="button" aria-disabled="true">withdraw</a>
         </div>  
 
             

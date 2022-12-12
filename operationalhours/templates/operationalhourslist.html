@@ -55,41 +55,26 @@
 
         <table class="center">
             <tr>
-              <th>No</th>
-              <th>Day</th>
-              <th>Opening time</th>
-              <th>Closing time</th>
-              <th>Actions</th>
+                <th>No</th>
+                <th>Day</th>
+                <th>Operating time</th>
+                <th>Closing time</th>
+                <th>Action</th>
             </tr>
-            <tr>
-                <th>1</th>
-                <th>Monday</th>
-                <th>08:00:00</th>
-                <th>21:00:00</th>
-                <th><a href="{% url 'operationalhours:show_edit'  %}" class="btn btn-primary " role="button" aria-disabled="true">Edit</a>
-                    <a href="#" class="btn btn-primary " role="button" aria-disabled="true">Delete</a>
-                </th>
-            </tr>
-            <tr>
-                <th>2</th>
-                <th>Tuesday</th>
-                <th>08:30:00</th>
-                <th>22:00:00</th>
-                <th><a href="{% url 'operationalhours:show_edit'   %}" class="btn btn-primary " role="button" aria-disabled="true">Edit</a>
-                    <a href="#" class="btn btn-primary " role="button" aria-disabled="true">Delete</a>
-                </th>
-
-            </tr>
-            <tr>
-                <th>3</th>
-                <th>Wednesday</th>
-                <th>13:00:00</th>
-                <th>23:00:00</th>
-                <th><a href="{% url 'operationalhours:show_edit'   %}" class="btn btn-primary " role="button" aria-disabled="true">Edit</a>
-                    <a href="#" class="btn btn-primary " role="button" aria-disabled="true">Delete</a>
-                </th>
-            </tr>
+            {% comment %} Add the data below this line {% endcomment %}
+            {% for i in optime %}
+                <tr>
+                    <th>{{forloop.counter}}</th>
+                    <th>{{i.0}}</th>
+                    <th>{{i.1}}</th>
+                    <th>{{i.2}}</th>
+                    <th>{{i.3}}</th>
+                    <th><button type="button" class="btn btn-warning"><a href="{% url 'operationalhours:set_remove' i.0 %}"style="color:#ffffff; text-decoration: none;">Remove Task</a></button></th>
+                    <th><button type="button" class="btn btn-primary"><a href="{% url 'operationalhours:show_edit' i.0 %}"style="color:#ffffff; text-decoration: none;">edit</a></button></th>
+                </tr>
+            {% endfor %}
         </table>
+        <button type="button" class="btn btn-primary"><a href="{% url 'operationalhours:show_operationalhours' %}"style="color:#ffffff; text-decoration: none;">Create New</a></button>
         
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

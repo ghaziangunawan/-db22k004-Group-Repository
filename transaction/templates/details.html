@@ -33,31 +33,32 @@
             </div>
         </nav>
 
-        <p style="margin-left: 40px; margin-top: 50px">Time of order creation: 2022-11-04 11:30:05</p>
-        <p style="margin-left: 40px; margin-top: 40px">Customer name: Mikayla Putri</p>
-        <p style="margin-left: 40px;">Street: Jalan Bahagia nomor 72</p>
-        <p style="margin-left: 40px;">District: Cinere</p>
-        <p style="margin-left: 40px;">City: Depok</p>
-        <p style="margin-left: 40px;">Province: Jawa Barat</p>
-        <p style="margin-left: 40px; margin-top: 40px">Restaurant: Warung Mantap Depok</p>
-        <p style="margin-left: 40px;">Street: Jalan Sejahtera nomor 5</p>
-        <p style="margin-left: 40px;">District: Bojongsari</p>
-        <p style="margin-left: 40px;">City: Depok</p>
-        <p style="margin-left: 40px;">Province: Jawa Barat</p>
+        <p style="margin-left: 40px; margin-top: 50px">Time of order creation: {{datetime}}</p>
+        <p style="margin-left: 40px; margin-top: 40px">Customer name: {{custName}}</p>
+        <p style="margin-left: 40px;">Street: {{CStreet}} </p>
+        <p style="margin-left: 40px;">District: {{CDistrict}}</p>
+        <p style="margin-left: 40px;">City: {{CCity}}</p>
+        <p style="margin-left: 40px;">Province: {{CProvince}}</p>
+        <p style="margin-left: 40px; margin-top: 40px">Restaurant: {{Rname}} {{RBranch}}</p>
+        <p style="margin-left: 40px;">Street: {{RStreet}}</p>
+        <p style="margin-left: 40px;">District: {{RDistrict}}</p>
+        <p style="margin-left: 40px;">City: {{RCity}}</p>
+        <p style="margin-left: 40px;">Province: {{RProvince}} </p>
         <p style="margin-left: 40px; margin-top: 40px">Food ordered:</p>
-        <p style="margin-left: 50px;"> - Fried Chicken (1) - [Notes if any]</p>
-        <p style="margin-left: 50px;"> - Ice Cream (2) - [Notes if any]</p>
-        <p style="margin-left: 40px; ">Total Food Price: 11000</p>
-        <p style="margin-left: 40px; ">Total Discount: 0</p>
-        <p style="margin-left: 40px; ">Delivery Fee: 4000</p>
-        <p style="margin-left: 40px; ">Total Price: 15000</p>
-        <p style="margin-left: 40px; ">Payment method: RestoPay</p>
-        <p style="margin-left: 40px; margin-top: 40px">Payment Status: Succeed</p>
-        <p style="margin-left: 40px; ">Transaction status: Waiting for Restaurant Confirmation</p>
-        <p style="margin-left: 40px; margin-top: 40px">Courier: -</p>
-        <p style="margin-left: 40px; ">Plate number: -</p>
-        <p style="margin-left: 40px; ">Vehicle Type: -</p>
-        <p style="margin-left: 40px; ">Vehicle Brand: -</p>
+        {% for i in foods %}
+        <p style="margin-left: 50px;"> - {{i.0}} - [{{i.1}}]</p>
+        {% endfor %}
+        <p style="margin-left: 40px; ">Total Food Price: {{foodPrice}}</p>
+        <p style="margin-left: 40px; ">Total Discount: {{totaldiscount}}</p>
+        <p style="margin-left: 40px; ">Delivery Fee: {{deliveryfee}}</p>
+        <p style="margin-left: 40px; ">Total Price: {{totalprice}}</p>
+        <p style="margin-left: 40px; ">Payment method: {{payment_methode}}</p>
+        <p style="margin-left: 40px; margin-top: 40px">Payment Status: {{payment_status}}</p>
+        <p style="margin-left: 40px; ">Transaction status: {{transaction_status}}</p>
+        <p style="margin-left: 40px; margin-top: 40px">Courier: {{courier}}</p>
+        <p style="margin-left: 40px; ">Plate number: {{plateno}}</p>
+        <p style="margin-left: 40px; ">Vehicle Type: {{vehicletype}}</p>
+        <p style="margin-left: 40px; ">Vehicle Brand: {{vehiclebrand}}</p>
 
         <div class="row justify-content-center" style="margin-top: 20px;">
             <a href="{% url 'transaction:show_transaction'  %}" class="btn btn-primary " role="button" aria-disabled="true">Back</a>
