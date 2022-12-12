@@ -9,48 +9,54 @@
 </head>
 
 <body>
-  <form class="needs-validation p-3">
+  {% for error in errors %}
+  <span>{{ error }}</span>
+  {% endfor %}
+
+  <form method="POST" action="" id="create_form">
+    {% csrf_token %}
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input id="email" type="email" class="form-control" required>
+      <input name='email' id="email" type="email" class="form-control" required>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input id="password" type="password" class="form-control" required>
+      <input name='password' id="password" type="password" class="form-control" required>
     </div>
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" required>
+      <input name='name' type="text" class="form-control" required>
     </div>
     <div class="mb-3">
       <label for="phone" class="form-label">Phone Number</label>
-      <input id="phone" type="tel" class="form-control" required>
+      <input name='phone' id="phone" type="tel" class="form-control" required>
     </div>
     <div class="mb-3">
       <label for="nik" class="form-label">NIK</label>
-      <input id="nik" type="number" class="form-control" required>
+      <input name='nik' id="nik" type="number" class="form-control" required>
     </div>
     <div class="mb-3">
       <label for="bank" class="form-label">Bank Name</label>
-      <input id="bank" type="text" class="form-control" required>
+      <input name='bank' id="bank" type="text" class="form-control" required>
     </div>
     <div class="mb-3">
       <label for="accnum" class="form-label">Account Number</label>
-      <input id="accnum" type="number" class="form-control" required>
+      <input name='accnum' id="accnum" type="number" class="form-control" required>
     </div>
     <div class="mb-3">
       <label for="dob" class="form-label">Date of Birth</label>
-      <input id="dob" type="date" class="form-control" required>
+      <input name='dob' id="dob" type="date" class="form-control" required>
     </div>
     <div class="mb-3">
       <label for="gender" class="form-label">Gender</label>
-      <select id="gender" class="form-select" required>
+      <select name='gender' id="gender" class="form-select" required>
         <option selected disabled value="">Select Gender</option>
-        <option>Male</option>
-        <option>Female</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
       </select>
     </div>
-    <button class="btn btn-primary" type="submit">Register</button>
+    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="modal_submit">Register</button>
+
   </form>
 </body>
 

@@ -31,16 +31,16 @@
 
 
         <div class="row justify-content-center" style="margin-top: 40px;">
-            <button style='font-size: medium;' type="button" class="btn btn-primary custom btn-lg">Admin</button>
+            <a href="{% url 'user:show_adminform'  %}" class="btn btn-warning " role="button" aria-disabled="true">Admin</a>
         </div>
         <div class="row justify-content-center" style="margin-top: 20px;">
-            <button style='font-size: medium;' type="button" class="btn btn-primary custom btn-lg">Restaurant</button>
+            <a href="{% url 'user:show_restaurantform'  %}" class="btn btn-warning " role="button" aria-disabled="true">Restaurant</a>
         </div>
         <div class="row justify-content-center" style="margin-top: 20px;">
-            <button style='font-size: medium;'  type="button" class="btn btn-primary custom btn-lg">Customer</button>
+            <a href="{% url 'user:show_customerform'  %}" class="btn btn-warning " role="button" aria-disabled="true">Customer</a>
         </div>
         <div class="row justify-content-center" style="margin-top: 20px;">
-            <button style='font-size: medium;' type="button " class="btn btn-primary text-white custom btn-lg">Courier</button>
+            <a href="{% url 'user:show_courierform'  %}" class="btn btn-warning " role="button" aria-disabled="true">Courier</a>
         </div>  
 
             
