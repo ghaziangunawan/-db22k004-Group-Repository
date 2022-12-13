@@ -1,13 +1,103 @@
-from django.shortcuts import render
+import random
+import string
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.urls import reverse
+from django.db import connection
+# from delivery_fee.models import Task
 
-# Create your views here.
+
+def show_deliveryfee(request):
+	cursor = connection.cursor()
+	cursor.execute("SET search_path to SIREST;")
+	SQL = f"""
+	SELECT * FROM DELIVERY_FEE_PER_KM
+	"""
+	cursor.execute(SQL)
+	deliveryfee = cursor.fetchall()
+
+	context = {'deliveryfee': deliveryfee}
+	return render(request, 'deliveryfeeperkm.html', context)
 
 
-def show_deliveryfee(request):   
-    return render(request, 'deliveryfeeperkm.html')
+def create_deliveryfee(request):
+  
+    errors = []
+    cursor = connection.cursor()
+    cursor.execute("SET search_path to SIREST")
+    
+    if request.method == "POST":
+        province = request.POST.get('province')
+        motorfee = request.POST.get('motorfee')
+        carfee = request.POST.get('carfee')
 
-def show_createdeliveryfee(request):   
-    return render(request, 'createdeliveryfeeperkm.html')
+        SQL = f"""
+        SELECT MAX(CAST(Id AS NUMERIC)) FROM DELIVERY_FEE_PER_KM;
+        """
+        cursor.execute(SQL)
+        checkid = cursor.fetchone()
+
+        newid = 1
+        if checkid[0]:
+            newid = int(checkid[0]) + 1
+
+        if province and motorfee and carfee:
+            SQL = f"""
+            INSERT INTO DELIVERY_FEE_PER_KM
+            VALUES ('{newid}', '{province}', '{motorfee}', '{carfee}')
+            """
+            cursor.execute(SQL)
+            return redirect('deliveryfeeperkm:show_deliveryfee')
+
+    return render(request, "createdeliveryfeeperkm.html")
+
+def update_deliveryfee(request, id):
+   
+    cursor = connection.cursor()
+    cursor.execute("SET search_path to SIREST")
+
+    if request.method == "POST":
+        addmotorfee = request.POST.get('motorfee')
+        addcarfee = request.POST.get('carfee')
+
+        if addmotorfee and addcarfee:
+            
+            SQL = f"""
+            UPDATE DELIVERY_FEE_PER_KM
+            SET motorfee = '{addmotorfee}', carfee = '{addcarfee}'
+            WHERE id = '{id}'; 
+            """
+            cursor.execute(SQL)
+
+            return redirect('deliveryfeeperkm:show_deliveryfee')
+
+    SQL = f"""
+    SELECT province FROM DELIVERY_FEE_PER_KM WHERE id = '{id}'
+    """
+
+    cursor.execute(SQL)
+    nameofprov = cursor.fetchone()
+    context = {'deliveryfee': nameofprov}
+    return render(request, "updatedeliveryfeeperkm.html", context)
+
+        
+
+def delete_deliveryfee(request, id):
+    
+    cursor = connection.cursor()
+
+    cursor.execute("SET search_path to SIREST")
+
+    SQL = f"""
+        DELETE FROM DELIVERY_FEE_PER_KM
+        WHERE id = '{id}'
+        """
+    cursor.execute(SQL)
+
+    return redirect('deliveryfeeperkm:show_deliveryfee')
 
 def show_updatedeliveryfee(request):
     return render(request, 'updatedeliveryfeeperkm.html')
+
+def show_createdeliveryfee(request):   
+    return render(request, 'createdeliveryfeeperkm.html')

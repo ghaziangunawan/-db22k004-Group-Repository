@@ -26,15 +26,21 @@
         <th>Actions</th>
         </tr>
         
+        {% for a in deliveryfee %}
         <tr>
-            <th>{{item.no}} 1</th>
-            <th>{{item.province}} Jakarta</th>
-            <th>{{item.motorcycle}} 3500</th>
-            <th>{{item.car}} 6500</th>
-            <th><button type="button" class="btn btn-primary">Edit</button>
-                <button type="button" class="btn btn-secondary">Delete</button></th>
-        </tr>
-    
+            <th>{{a.0}}</th>
+            <th>{{a.1}}</th>
+            <th>{{a.2}}</th>
+            <th>{{a.3}}</th>
+            <th><a href="{% url 'deliveryfeeperkm:update_deliveryfee' id=a.0 %}"><button type="button" class="btn btn-secondary" >Edit</button></a>
+            <a href="{% url 'deliveryfeeperkm:delete_deliveryfee' id=a.0 %}"><button type="button" class="btn btn-secondary" >Delete</button></a>
+            </th>
+          </tr>
+        
+        {% endfor %}
     </table>
-    </div>
+    <div style="text-align:center">
+    <a href="{% url 'deliveryfeeperkm:create_deliveryfee' %}"><button type="button" class="btn btn-secondary">Create</button></a>
+  </div>
+  </div>
   </body>
