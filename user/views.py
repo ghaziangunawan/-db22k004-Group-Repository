@@ -396,7 +396,7 @@ def show_courierdashboard(request):
     plate,lisence,type,brand = courier[1],courier[2],courier[3],courier[4]
 
     verified=False
-    
+    admin = None
     if transaction_actor[5]:
         admin = transaction_actor[5]
         verified = True
