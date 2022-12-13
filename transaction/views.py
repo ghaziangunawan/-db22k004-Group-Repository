@@ -6,15 +6,31 @@ from django.urls import reverse
 
 # Create your views here.
 
-def show_transaction(request):  
+def show_transaction(request):
+    email = request.session.get('useremail')   
     cursor = connection.cursor()
     search_path = 'set search_path to sirest'
+    cursor.execute(search_path)
+    SQL = f"""
+        select rname
+        from restaurant
+        where email = '{email}'
+        """
+    cursor.execute(SQL)
+    Rname = cursor.fetchall()[0][0]
+    SQL = f"""
+        select rbranch
+        from restaurant
+        where email = '{email}'
+        """
+    cursor.execute(SQL)
+    Rbranch = cursor.fetchall()[0][0]
     cursor.execute(search_path)
     SQL = f"""
         select fname,lname, transaction.datetime, transaction_Status.name, transaction_history.email, transaction_history.datetime 
         from transaction join user_acc on transaction.email = user_acc.email join transaction_history on transaction.email = transaction_history.email join transaction_Status on TSid = transaction_status.id
         join transaction_food on transaction.email = transaction_food.email 
-        where not (transaction_status.id = '3' OR transaction_status.id = '4' OR transaction_status.id = '5') AND rname = 'Aimbu' and rbranch = 'Eliot'
+        where not (transaction_status.id = '3' OR transaction_status.id = '4' OR transaction_status.id = '5') AND rname = '{Rname}' and rbranch = '{Rbranch}'
         """
     cursor.execute(SQL)
     fetchTransaction = cursor.fetchall()  
@@ -23,17 +39,32 @@ def show_transaction(request):
     return render(request, 'transaction.html',response) 
     
 
-def show_details(request,email):   
+def show_details(request,email):
+    useremail = request.session.get('useremail')    
     cursor = connection.cursor()
     search_path = 'set search_path to sirest'
     cursor.execute(search_path)
+    SQL = f"""
+        select rname
+        from restaurant
+        where email = '{useremail}'
+        """
+    cursor.execute(SQL)
+    Rname = cursor.fetchall()[0][0]
+    SQL = f"""
+        select rbranch
+        from restaurant
+        where email = '{useremail}'
+        """
+    cursor.execute(SQL)
+    Rbranch = cursor.fetchall()[0][0]
     SQL = f"""
     select *
     from transaction join transaction_food on transaction.email = transaction_food.email and transaction.datetime = transaction_food.datetime
     join user_acc on user_acc.email = transaction.email join restaurant on restaurant.rname = transaction_food.rname and restaurant.rbranch = transaction_food.rbranch
     join payment_method on PMid = payment_method.id join payment_status on PSid = payment_status.id join transaction_history on transaction.email = transaction_history.email and transaction.datetime = transaction_history.datetime
     join transaction_status on TSid = transaction_status.id join courier on CourierId = Courier.email
-    where restaurant.rname = 'Aimbu' and restaurant.rbranch = 'Eliot' and transaction.email = '{email}'
+    where restaurant.rname = '{Rname}' and restaurant.rbranch = '{Rbranch}' and transaction.email = '{email}'
     """
     cursor.execute(SQL)
     fetchDetail = cursor.fetchall()

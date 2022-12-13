@@ -1,7 +1,7 @@
 from transactioncustomer.views import *
 from django.urls import path
 
-app_name = 'Food'
+app_name = 'transactioncustomer'
 
 urlpatterns = [
     path('', show_inputfooddeliveryaddress, name='show_inputfooddeliveryaddress'),
