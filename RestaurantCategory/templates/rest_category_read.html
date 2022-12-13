@@ -19,23 +19,28 @@
         </tr>
       </thead>
       <tbody>
+        {% for cats in rest_cat %}
         <tr>
-          <th scope="row">1</th>
-          <td>Indonesia</td>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ cats.1 }}</td>
+          {% if cats.2 == 0 %}
+          <td>
+            <a href="{% url 'RestaurantCategory:delete_rest_cat' rest_cat_id=cats.0 %}">
+              <button class="btn btn-danger">Delete</button>
+            </a>
+          </td>
+          {% else %}
           <td></td>
+          {% endif %}
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>India</td>
-          <td><button class="btn btn-danger">Delete</button></td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Japan</td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
 </body>
+
+<script>
+  
+</script>
 
 </html>
