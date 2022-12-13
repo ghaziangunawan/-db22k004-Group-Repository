@@ -43,12 +43,12 @@
                   Restaurant
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Restaurant Category List</a>
-                  <a class="dropdown-item" href="#">Create Restaurant Category</a>
-                  <a class="dropdown-item" href="#">Food Category List</a>
-                  <a class="dropdown-item" href="#">Create Food Category</a>
-                  <a class="dropdown-item" href="#">Food Ingredient List</a>
-                  <a class="dropdown-item" href="#">Restaurant and Food List</a>
+                  <a class="dropdown-item" href="{% url 'RestaurantCategory:rest_category_read' %}">Restaurant Category List</a>
+                  <a class="dropdown-item" href="{% url 'RestaurantCategory:rest_category_create'%}">Create Restaurant Category</a>
+                  <a class="dropdown-item" href="{% url 'foodcategory:show_foodcategorylist'%}">Food Category List</a>
+                  <a class="dropdown-item" href="{% url 'foodcategory:show_createfoodcategory'%}">Create Food Category</a>
+                  <a class="dropdown-item" href="{% url 'Ingredients:ingredient_read'%}">Food Ingredient List</a>
+                  <a class="dropdown-item" href="{% url 'Food:show_restaurantlist'%}">Restaurant and Food List</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -65,12 +65,12 @@
                   Order
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Delivery Fee per KM List</a>
-                  <a class="dropdown-item" href="#">Create Delivery Fee per KM</a>
+                  <a class="dropdown-item" href="{% url 'deliveryfeeperkm:show_deliveryfee' %}">Delivery Fee per KM List</a>
+                  <a class="dropdown-item" href="{% url 'deliveryfeeperkm:show_createdeliveryfee' %}">Create Delivery Fee per KM</a>
                 </div>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Logout <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'loginlogout:logout' %}">Logout <span class="sr-only">(current)</span></a>
               </li>
           </ul>
         </div>
@@ -116,8 +116,8 @@
                     {% else %}
                     <th>Not Verified</th>
                     {% endif %}
-
-                    <th><button type="button" class="btn btn-warning"><a href="{% url 'user:show_userprofile' i.4 i.2 %}"style="color:#ffffff; text-decoration: none;">Details</a></button></th>
+<th><button type="button" class="btn btn-warning"><a href="{% url 'user:show_userprofile' i.4 i.2 %}"style="color:#ffffff; text-decoration: none;">Details</a></button></th>
+                    
                     {% if not i.3 %}
                     <th><button type="button" class="btn btn-primary"><a href="{% url 'user:verification' i.2 %}"style="color:#ffffff; text-decoration: none;">Verification</a></button></th>
                     {% endif %}

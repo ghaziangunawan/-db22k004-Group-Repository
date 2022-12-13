@@ -44,8 +44,8 @@
                   Operational Hours
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Operational Hours List</a>
-                  <a class="dropdown-item" href="#">Create operational Hours</a>
+                  <a class="dropdown-item" href="{% url 'operationalhours:show_operationalhourstime' %}">Operational Hours List</a>
+                  <a class="dropdown-item" href="{% url 'operationalhours:show_operationalhours' %}">Create operational Hours</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -53,8 +53,8 @@
                   Food
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Food List</a>
-                  <a class="dropdown-item" href="#">Create Food</a>
+                  <a class="dropdown-item" href="{% url 'Food:show_foodlist' %}">Food List</a>
+                  <a class="dropdown-item" href="{% url 'Food:show_addfood' %}">Create Food</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -62,7 +62,7 @@
                   Order
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Ongoing Order</a>
+                  <a class="dropdown-item" href="{% url 'transaction:show_transaction' %}">Ongoing Order</a>
                   <a class="dropdown-item" href="#">Order History</a>
                 </div>
             </li>
@@ -76,10 +76,10 @@
                 </div>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">RestoPay <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'restopay:show_restopay' %}">RestoPay <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Logout <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'loginlogout:logout' %}">Logout <span class="sr-only">(current)</span></a>
               </li>
           </ul>
         </div>

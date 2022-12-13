@@ -8,11 +8,11 @@ from django.urls import reverse
 
 def show_restopay(request):
     # Start Copy Here For Login Required Function
+    email = request.session.get('useremail')
     cursor = connection.cursor()
     cursor.execute("SET search_path to PUBLIC")
 
     if not request.session.get("isLoggedIn"):
-        print(request.session.get("useremail"))
         return redirect('loginlogout:show_login')
 
     cursor = connection.cursor()
@@ -21,7 +21,7 @@ def show_restopay(request):
     SQL = f"""
     SELECT restopay
     FROM transaction_actor
-    WHERE email = '{request.session.get("useremail")}'
+    WHERE email = '{email}'
     """
     cursor.execute(SQL)
     fetchBalance = cursor.fetchall()  
@@ -29,53 +29,64 @@ def show_restopay(request):
     return render(request, 'restopay.html',response)
 
 def show_withdraw(request):
+    email = request.session.get('useremail')
     cursor = connection.cursor()
     search_path = 'set search_path to sirest'
     cursor.execute(search_path)
     SQL = f"""
     SELECT restopay
     FROM transaction_actor
-    WHERE email = '{request.session.get("useremail")}'
+    WHERE email = '{email}'
     """
     cursor.execute(SQL)
     fetchBalance = cursor.fetchall()  
-    response = {'balance': str(fetchBalance[0][0])}
+    context = {'balance': str(fetchBalance[0][0])}
     if request.method == 'POST':
         response = HttpResponseRedirect(reverse('restopay:show_restopay'))
         amount = request.POST.get('Amount')
+        bank = request.POST.get('bankName')
+        account = request.POST.get('AccountNumber')
+        if not amount or not bank or not account:
+            return render(request, 'withdraw.html',context)
         cursor = connection.cursor()
         search_path = 'set search_path to sirest'
         cursor.execute(search_path)
         SQL = f"""
-        select withdraw('{request.session.get("useremail")}', {amount})
+        select withdraw('{email}', {amount})
         """
         cursor.execute(SQL)
         return response
-    return render(request, 'withdraw.html',response)
+    return render(request, 'withdraw.html',context)
 
 def show_topup(request):
+    email = request.session.get('useremail')
     cursor = connection.cursor()
     search_path = 'set search_path to sirest'
     cursor.execute(search_path)
+    
     SQL = f"""
     SELECT restopay
     FROM transaction_actor
-    WHERE email = '{request.session.get("useremail")}'
+    WHERE email = '{email}'
     """
     cursor.execute(SQL)
     fetchBalance = cursor.fetchall()  
-    response = {'balance': str(fetchBalance[0][0])}   
+    context = {'balance': str(fetchBalance[0][0])}   
     if request.method == 'POST':
         response = HttpResponseRedirect(reverse('restopay:show_restopay'))
         amount = request.POST.get('Amount')
+        bank = request.POST.get('BankName')
+        account = request.POST.get('AccountNumber')
+        if not amount or not bank or not account:
+            return render(request, 'topup.html',context)
         cursor = connection.cursor()
         search_path = 'set search_path to sirest'
         cursor.execute(search_path)
         SQL = f"""
         UPDATE transaction_actor
         SET restopay = restopay + {amount}
-        WHERE email = '{request.session.get("useremail")}'
+        WHERE email = '{email}'
         """
         cursor.execute(SQL)
         return response
-    return render(request, 'topup.html',response)
+    return render(request, 'topup.html',context)

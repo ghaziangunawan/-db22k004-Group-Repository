@@ -6,6 +6,7 @@ from django.urls import reverse
 
 # Create your views here.
 def show_operationalhours(request):   
+    email = request.session.get('useremail')
     cursor = connection.cursor()
     search_path = 'set search_path to sirest'
     cursor.execute(search_path)
@@ -19,7 +20,21 @@ def show_operationalhours(request):
         
         else:
             SQL = f"""
-            INSERT INTO restaurant_operating_hours VALUES ('Vidoo', 'Paget',
+        select rname
+        from restaurant
+        where email = '{email}'
+        """
+            cursor.execute(SQL)
+            Rname = cursor.fetchall()[0][0]
+            SQL = f"""
+        select rbranch
+        from restaurant
+        where email = '{email}'
+        """
+            cursor.execute(SQL)
+            Rbranch = cursor.fetchall()[0][0]
+            SQL = f"""
+            INSERT INTO restaurant_operating_hours VALUES ('{Rname}', '{Rbranch}',
             '{day}','{ophours}','{closehours}')
             """
             cursor.execute(SQL)
@@ -27,13 +42,29 @@ def show_operationalhours(request):
     return render(request, 'operationalhours.html')
 
 def show_operationalhourstime(request): 
+    email = request.session.get('useremail')
     cursor = connection.cursor()
     search_path = 'set search_path to sirest'
     cursor.execute(search_path)
     SQL = f"""
+        select rname
+        from restaurant
+        where email = '{email}'
+        """
+    cursor.execute(SQL)
+    Rname = cursor.fetchall()[0][0]
+    SQL = f"""
+        select rbranch
+        from restaurant
+        where email = '{email}'
+        """
+    cursor.execute(SQL)
+    Rbranch = cursor.fetchall()[0][0]
+
+    SQL = f"""
         select day,starthours,endhours
         from restaurant_operating_hours
-        where name='Vidoo' and branch='Paget'
+        where name='{Rname}' and branch='{Rbranch}'
         """
     cursor.execute(SQL)
     fetchOptime = cursor.fetchall()  
@@ -41,7 +72,8 @@ def show_operationalhourstime(request):
     response = {'optime': fetchOptime}
     return render(request, 'operationalhourslist.html',response)
 
-def show_edit(request,initday):   
+def show_edit(request,initday): 
+    email = request.session.get('useremail')  
     if request.method =='POST':
         response = HttpResponseRedirect(reverse('operationalhours:show_operationalhourstime'))
         cursor = connection.cursor()
@@ -50,10 +82,26 @@ def show_edit(request,initday):
         day = request.POST.get('day')
         ophours = request.POST.get('ophour')
         closehours = request.POST.get('closehour')
+        if not day or not ophours or not closehours:
+            return render(request, 'edit.html')
+        SQL = f"""
+        select rname
+        from restaurant
+        where email = '{email}'
+        """
+        cursor.execute(SQL)
+        Rname = cursor.fetchall()[0][0]
+        SQL = f"""
+        select rbranch
+        from restaurant
+        where email = '{email}'
+        """
+        cursor.execute(SQL)
+        Rbranch = cursor.fetchall()[0][0]
         SQL = f"""
         UPDATE restaurant_operating_hours
         SET day='{day}', starthours='{ophours}', endhours='{closehours}'
-        where name='Vidoo' and branch='Paget' and day='{initday}'
+        where name='{Rname}' and branch='{Rbranch}' and day='{initday}'
         """
         cursor.execute(SQL)
         return response
@@ -61,14 +109,29 @@ def show_edit(request,initday):
     return render(request, 'edit.html',context)
 
 def set_remove(request,day):
+    email = request.session.get('useremail')  
     response = HttpResponseRedirect(reverse('operationalhours:show_operationalhourstime'))
     cursor = connection.cursor()
     search_path = 'set search_path to sirest'
     cursor.execute(search_path)
     day = day
     SQL = f"""
+        select rname
+        from restaurant
+        where email = '{email}'
+        """
+    cursor.execute(SQL)
+    Rname = cursor.fetchall()[0][0]
+    SQL = f"""
+        select rbranch
+        from restaurant
+        where email = '{email}'
+        """
+    cursor.execute(SQL)
+    Rbranch = cursor.fetchall()[0][0]
+    SQL = f"""
         DELETE FROM restaurant_operating_hours 
-        where name='Vidoo' and branch='Paget' and day='{day}'
+        where name='{Rname}' and branch='{Rbranch}' and day='{day}'
         """
     cursor.execute(SQL)
     return response
