@@ -315,6 +315,7 @@ def show_customerdashboard(request):
     dob,gender = customer[1],customer[2]
 
     verified=False
+    admin = None
     if transaction_actor[5]:
         admin = transaction_actor[5]
         verified = True
@@ -360,6 +361,7 @@ def show_restaurantdashboard(request):
     print(operating_hours)
 
     verified=False
+    admin = None
     if transaction_actor[5]:
         admin = transaction_actor[5]
         verified = True
@@ -394,6 +396,7 @@ def show_courierdashboard(request):
     plate,lisence,type,brand = courier[1],courier[2],courier[3],courier[4]
 
     verified=False
+    
     if transaction_actor[5]:
         admin = transaction_actor[5]
         verified = True
@@ -501,6 +504,7 @@ def show_userprofile(request,role,email):
         dob,gender = customer[1],customer[2]
 
         verified=False
+        admin = None
         if transaction_actor[5]:
             admin = transaction_actor[5]
             verified = True
@@ -541,6 +545,7 @@ def show_userprofile(request,role,email):
             operating_hours.append([i[2],i[3],i[4]])
 
         verified=False
+        admin = None
         if transaction_actor[5]:
             admin = transaction_actor[5]
             verified = True

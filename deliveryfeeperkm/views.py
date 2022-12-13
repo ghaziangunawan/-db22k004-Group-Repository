@@ -1,28 +1,30 @@
-import random
-import string
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.db import connection
+from django.core.exceptions import PermissionDenied
 # from delivery_fee.models import Task
 
 
 def show_deliveryfee(request):
-	cursor = connection.cursor()
-	cursor.execute("SET search_path to SIREST;")
-	SQL = f"""
+    if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
+    if not request.session.get('isAdmin'): raise PermissionDenied()
+
+    cursor = connection.cursor()
+    cursor.execute("SET search_path to SIREST;")
+    SQL = f"""
 	SELECT * FROM DELIVERY_FEE_PER_KM
 	"""
-	cursor.execute(SQL)
-	deliveryfee = cursor.fetchall()
+    cursor.execute(SQL)
+    deliveryfee = cursor.fetchall()
 
-	context = {'deliveryfee': deliveryfee}
-	return render(request, 'deliveryfeeperkm.html', context)
+    context = {'deliveryfee': deliveryfee}
+    return render(request, 'deliveryfeeperkm.html', context)
 
 
 def create_deliveryfee(request):
-  
-    errors = []
+    if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
+    if not request.session.get('isAdmin'): raise PermissionDenied()
+
     cursor = connection.cursor()
     cursor.execute("SET search_path to SIREST")
     
@@ -52,6 +54,8 @@ def create_deliveryfee(request):
     return render(request, "createdeliveryfeeperkm.html")
 
 def update_deliveryfee(request, id):
+    if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
+    if not request.session.get('isAdmin'): raise PermissionDenied()
    
     cursor = connection.cursor()
     cursor.execute("SET search_path to SIREST")
@@ -83,6 +87,8 @@ def update_deliveryfee(request, id):
         
 
 def delete_deliveryfee(request, id):
+    if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
+    if not request.session.get('isAdmin'): raise PermissionDenied()
     
     cursor = connection.cursor()
 
