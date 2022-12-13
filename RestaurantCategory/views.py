@@ -14,7 +14,7 @@ def rest_category_create(request):
         cursor.execute(ssp)
 
         sql = f"""
-        SELECT MAX(Id) FROM RESTAURANT_CATEGORY
+        SELECT MAX(CAST(Id as NUMERIC)) FROM RESTAURANT_CATEGORY
         """
         
         cursor.execute(sql)
@@ -45,6 +45,7 @@ def rest_category_read(request):
     LEFT JOIN RESTAURANT
     ON Id = RCategory
     GROUP BY Id, Name
+    ORDER BY CAST(Id as NUMERIC)
     """
 
     cursor.execute(sql)
