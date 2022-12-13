@@ -2,17 +2,15 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
+
 
 ssp = 'set search_path to sirest'
 pss = 'set search_path to public'
 
 # Create your views here.
-@csrf_exempt
 def show_sirest(request):   
     return render(request, 'sirest.html')
 
-@csrf_exempt
 def show_login(request):
     if request.method == "POST":
         cursor = connection.cursor()
@@ -73,7 +71,6 @@ def show_login(request):
 
     return render(request, 'login.html')
 
-@csrf_exempt
 def logout(request):
     request.session.flush()
     return redirect('loginlogout:show_sirest')

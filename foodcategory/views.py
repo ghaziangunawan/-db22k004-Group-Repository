@@ -10,10 +10,9 @@ import datetime
 from django.db import connection
 from random import randint
 from django.core.exceptions import PermissionDenied
-from django.views.decorators.csrf import csrf_exempt
 
 
-@csrf_exempt
+
 def add_food_category(request):
     if not request.session.get('isLoggedIn'): 
         return redirect('loginlogout:show_login')
@@ -49,7 +48,7 @@ def add_food_category(request):
 
     return render(request, "createfoodcategory.html", context)
 
-@csrf_exempt
+
 def show_food_category(request):
     if not request.session.get('isLoggedIn'): 
         return redirect('loginlogout:show_login')
@@ -67,7 +66,7 @@ def show_food_category(request):
 
     return render(request, "foodcategorylist.html", context)
 
-@csrf_exempt
+
 def delete_food_category(request, name):
     if not request.session.get('isLoggedIn'): 
         return redirect('loginlogout:show_login')

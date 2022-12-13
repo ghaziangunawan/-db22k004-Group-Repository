@@ -3,10 +3,9 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
-@csrf_exempt
 def show_operationalhours(request):   
     email = request.session.get('useremail')
     cursor = connection.cursor()
@@ -43,7 +42,6 @@ def show_operationalhours(request):
             return response
     return render(request, 'operationalhours.html')
 
-@csrf_exempt
 def show_operationalhourstime(request): 
     email = request.session.get('useremail')
     cursor = connection.cursor()
@@ -75,7 +73,6 @@ def show_operationalhourstime(request):
     response = {'optime': fetchOptime}
     return render(request, 'operationalhourslist.html',response)
 
-@csrf_exempt
 def show_edit(request,initday): 
     email = request.session.get('useremail')  
     if request.method =='POST':
@@ -112,7 +109,6 @@ def show_edit(request,initday):
     context = {'initday':initday}
     return render(request, 'edit.html',context)
 
-@csrf_exempt
 def set_remove(request,day):
     email = request.session.get('useremail')  
     response = HttpResponseRedirect(reverse('operationalhours:show_operationalhourstime'))

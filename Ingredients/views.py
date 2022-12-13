@@ -3,12 +3,10 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db import connection
 from django.core.exceptions import PermissionDenied
-from django.views.decorators.csrf import csrf_exempt
 
 ssp = 'set search_path to sirest'
 
 # Create your views here.
-@csrf_exempt
 def ingredient_create(request):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
@@ -41,7 +39,6 @@ def ingredient_create(request):
 
     return render(request, 'ingredient_create.html')
 
-@csrf_exempt
 def ingredient_read(request):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
@@ -67,7 +64,6 @@ def ingredient_read(request):
 
     return render(request, 'ingredient_read.html', context)
 
-@csrf_exempt
 def delete_ingredient(request, ingredient_id):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
