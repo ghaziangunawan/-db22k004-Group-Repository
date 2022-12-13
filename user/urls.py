@@ -9,7 +9,10 @@ urlpatterns = [
     path('customer/', show_customerform, name='show_customerform'),
     path('restaurant/', show_restaurantform, name='show_restaurantform'),
     path('courier/', show_courierform, name='show_courierform'),
-    path('dashboard/', show_userdashboard, name='show_userdashboard'),
-    path('dashboardtable/', show_userdashboardtable, name='show_userdashboardtable'),
-    path('profile/', show_userprofile, name='show_userprofile'),
+    path('customerdashboard/', show_customerdashboard, name='show_customerdashboard'),
+    path('admindashboard/', show_admindashboard, name='show_admindashboard'),
+    path('restaurantdashboard/', show_restaurantdashboard, name='show_restaurantdashboard'),
+    path('courierdashboard/', show_courierdashboard, name='show_courierdashboard'),
+    path('profile/<role>/<email>', show_userprofile, name='show_userprofile'),
+    path('verification/<email>', verification, name='verification'),
 ]
