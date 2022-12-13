@@ -1,5 +1,8 @@
 <div style="text-align: center ;">
 <h1>CREATE FOOD CATEGORY</h1>
-<p>Food Category Name: <input type="text" name="food_category"  class="form-control"> </p>
-<button onclick="">SAVE</button>
+<form method="POST" action="" id="create_form">
+    {% csrf_token %}
+    <p>Food Category Name: <input type="text" name="food_category"  class="form-control"> </p>
+<a href="{% url 'foodcategory:add_food_category' %}"><button type="submit">SAVE</button></a>
+</form>
 </div>

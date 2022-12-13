@@ -4,6 +4,7 @@ from django.urls import path
 app_name = 'foodcategory'
 
 urlpatterns = [
-    path('', show_foodcategorylist, name='show_foodcategorylist'),
-    path('create/', show_createfoodcategory, name='show_createfoodcategory'),
+    path('', show_food_category, name='show_food_category'),
+    path('create/', add_food_category, name='add_food_category'),
+    path('delete/<name>', delete_food_category, name='delete_food_category')
 ]

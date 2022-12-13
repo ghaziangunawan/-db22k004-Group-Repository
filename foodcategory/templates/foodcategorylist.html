@@ -11,27 +11,11 @@
       <th>Food Category</th>
       <th>Action</th>
     </tr>
+    {% for i in category %}
     <tr>
-      <td>1</td>
-      <td>Snack</td>
-      <td><button>Delete</button> </td>     
+      <th>{{forloop.counter}}</th>
+      <th>{{i.0}}</th>
+      <th><button type="button" class="btn btn-warning"><a href="{% url 'foodcategory:delete_food_category' i.0 %}"style="color:#ffffff; text-decoration: none;">delete</a></button></th>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>Minuman</td>
-      <td><button>Delete</button></td>
-      </td>          
-    </tr>
-    <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        </td>          
-      </tr>
-    <tr>
-        <td>etc</td>
-        <td>etc</td>
-        <td>etc</td>
-        </td>          
-    </tr>
+    {% endfor %}
   </table>
