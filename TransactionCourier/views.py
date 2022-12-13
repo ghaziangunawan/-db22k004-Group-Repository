@@ -2,11 +2,17 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db import connection
+from django.core.exceptions import PermissionDenied
 
 ssp = 'set search_path to sirest'
 
 # Create your views here.
 def transaction_courier(request):
+    if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
+    if not request.session.get('isCourier'): raise PermissionDenied()
+
+    cr_email = request.session.get('useremail')
+
     cursor = connection.cursor()
     cursor.execute(ssp)
 
@@ -25,7 +31,7 @@ def transaction_courier(request):
     FROM TRANSACTION T
     LEFT JOIN TRANSACTION_HISTORY TH 
     ON T.EMail = TH.Email AND T.Datetime = TH.Datetime
-    WHERE CourierId = 'bgrogan7@slideshare.net'
+    WHERE CourierId = '{cr_email}'
     GROUP BY (T.Email, T.Datetime)
     HAVING MAX(TSId) <= '3'
     """
@@ -116,7 +122,7 @@ def transaction_courier(request):
         sql = f"""
         SELECT CONCAT(FName, ' ', LName)
         FROM USER_ACC
-        WHERE Email = 'bgrogan7@slideshare.net'
+        WHERE Email = '{cr_email}'
         """
 
         cursor.execute(sql)
@@ -127,7 +133,7 @@ def transaction_courier(request):
         sql = f"""
         SELECT PlateNum, VehicleType, VehicleBrand
         FROM COURIER
-        WHERE Email = 'bgrogan7@slideshare.net'
+        WHERE Email = '{cr_email}'
         """
 
         cursor.execute(sql)
@@ -156,18 +162,25 @@ def transaction_courier(request):
     return render(request, 'transaction_courier.html', context)
 
 def update_transaction_courier(request, hash):
+    if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
+    if not request.session.get('isCourier'): raise PermissionDenied()
+
+    cr_email = request.session.get('useremail')
+
     cursor = connection.cursor()
     cursor.execute(ssp)
 
     sql = f"""
-    SELECT Email, Datetime
+    SELECT Email, Datetime, CourierId
     FROM TRANSACTION
     WHERE Hash = '{hash}'
     """
 
     cursor.execute(sql)
-    (email, datetime) = cursor.fetchone()
+    (email, datetime, courierid) = cursor.fetchone()
     # print(email, datetime)
+
+    if courierid != cr_email: raise PermissionDenied()
 
     sql = f"""
     INSERT INTO TRANSACTION_HISTORY VALUES
