@@ -25,8 +25,16 @@
     <table class="center">
         <h1>SIREST - KI4</h1><br>
         <tr>
-        <td><button>LOGIN</button></td>
-        <td><button>REGISTER</button></td>
+        <td>
+            <a href="{% url 'loginlogout:show_login' %}">
+                <button>LOGIN</button>
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'user:show_register' %}">
+                <button>REGISTER</button>
+            </a>
+        </td>
     </tr>
         
     </table>

@@ -21,23 +21,24 @@
     </style>
 
 <body>
-
-    <table class="center">
-        <h1>SIREST - KI4</h1><br>
-        <tr>
-        <td>Email: </td>
-        <td><input type="text" name="email"></td>
+    <form method="POST" class="needs-validation p-3">
+        {% csrf_token %}
+        <table class="center">
+            <h1>SIREST - KI4</h1><br>
+            <tr>
+            <td>Email: </td>
+            <td><input type="text" name="email"></td>
+            </tr>
+            <tr>
+            <td>Password: </td>
+            <td><input type="password" name="password"></td>
         </tr>
-        <tr>
-        <td>Password: </td>
-        <td><input type="password" name="description"></td>
-    </tr>
-        
-    </table>
-
-        <div class="container">
-            <td><input class="btn" type="submit" value="Login"></td>
-        </div>
+            
+        </table>
+            <div class="container">
+                <td><input class="btn" type="submit" value="Login"></td>
+            </div>
+    </form>
         
 </body>
     
