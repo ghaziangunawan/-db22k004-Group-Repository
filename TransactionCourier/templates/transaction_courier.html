@@ -4,83 +4,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://use.fontawesome.com/35d3a9e52b.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-  <title>Create Category</title>
+  <title>Transaction</title>
 </head>
 
 <body>
   <h1 class="pt-3 ps-3">Ongoing Orders</h1>
   <ol class="list-group list-group-numbered">
+    {% for data in datas %}
     <li class="list-group-item d-flex justify-content-between align-items-start">
       <div class="ms-2 me-auto">
         <div class="fw-bold">
-          Order C0de 
-          <span class="badge text-bg-secondary">Pending</span>
+          {{ data.1 }}'s Order
+          <span class="badge text-bg-{% if data.18 == 'Order Delivery' %}warning{% else %}secondary{% endif %}">{{ data.18 }}</span>
         </div>
-        Warung Mantap Depok -> Jalan Bahagia nomor 72 
+        <i class="fa fa-cutlery me-2"></i>{{ data.6}}
+        </br>
+        <small><i><sup>{{ data.0 }}</sup></i></small>
       </div>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal1">Details</button>
+      {% if data.18 == 'Order Delivery' %}
+      <a href="{% url 'TransactionCourier:update_transaction_courier' hash=data.23 %}">
+        <button class="btn btn-success me-3">Complete</button>
+      </a>
+      {% endif %}
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal{{ forloop.counter }}">Details</button>
     </li>
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">
-          Order C0de 
-          <span class="badge text-bg-secondary">Pending</span>
-        </div>
-        Warung Mantap Depok -> Jalan Bahagia nomor 72 
-      </div>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal1">Details</button>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">
-          Order C0de 
-          <span class="badge text-bg-warning">Delivering</span>
-        </div>
-        Warung Mantap Depok -> Jalan Bahagia nomor 72 
-      </div>
-      <button class="btn btn-success me-3">Complete</button>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal1">Details</button>
-    </li>
+    {% endfor %}
   </ol>
 
-  <br>
-
-  <h1 class="pt-3 ps-3">Completed Orders</h1>
-  <ol class="list-group list-group-numbered">
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">
-          Order C0de 
-          <aspan class="badge text-bg-success">Completed</span>
-        </div>
-        Warung Mantap Depok -> Jalan Bahagia nomor 72 
-      </div>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal1">Details</button>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">
-          Order C0de 
-          <aspan class="badge text-bg-danger">Cancelled</span>
-        </div>
-        Warung Mantap Depok -> Jalan Bahagia nomor 72 
-      </div>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal1">Details</button>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">
-          Order C0de 
-          <aspan class="badge text-bg-success">Completed</span>
-        </div>
-        Warung Mantap Depok -> Jalan Bahagia nomor 72 
-      </div>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal1">Details</button>
-    </li>
-  </ol>
-
-  <div class="modal fade" id="orderModal1" tabindex="-1">
+  {% for data in datas %}
+  <div class="modal fade" id="orderModal{{ forloop.counter }}" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
@@ -93,98 +47,119 @@
               <tbody>
                 <tr>
                   <td><b>Time of order creation</b></td>
-                  <td>2022-11-04 11:30:05</td>
+                  <td>{{ data.0 }}</td>
                 </tr>
                 <tr>
-                  <td><b>Food</b></td>
-                  <td>Mikayla Putri</td>
+                  <td><br/></td>
+                  <td><br/></td>
+                </tr>
+                <tr>
+                  <td><b>Customer Name</b></td>
+                  <td>{{ data.1 }}</td>
                 </tr>
                 <tr>
                   <td><b>Street</b></td>
-                  <td>Jalan Bahagia nomor 72</td>
+                  <td>{{ data.2 }}</td>
                 </tr>
                 <tr>
                   <td><b>District</b></td>
-                  <td>Cinere</td>
+                  <td>{{ data.3 }}</td>
                 </tr>
                 <tr>
                   <td><b>City</b></td>
-                  <td>Depok</td>
+                  <td>{{ data.4 }}</td>
                 </tr>
                 <tr>
                   <td><b>Province</b></td>
-                  <td>Jawa Barat</td>
+                  <td>{{ data.5 }}</td>
+                </tr>
+                <tr>
+                  <td><br/></td>
+                  <td><br/></td>
                 </tr>
                 <tr>
                   <td><b>Restaurant</b></td>
-                  <td>Warung Mantap Depok</td>
+                  <td>{{ data.6 }}</td>
                 </tr>
                 <tr>
                   <td><b>Street</b></td>
-                  <td>Jalan Sejahtera nomor 5</td>
+                  <td>{{ data.7 }}</td>
                 </tr>
                 <tr>
                   <td><b>District</b></td>
-                  <td>Bojongsari</td>
+                  <td>{{ data.8 }}</td>
                 </tr>
                 <tr>
                   <td><b>City</b></td>
-                  <td>Depok</td>
+                  <td>{{ data.9 }}</td>
                 </tr>
                 <tr>
                   <td><b>Province</b></td>
-                  <td>Jawa Barat</td>
+                  <td>{{ data.10 }}</td>
+                </tr>
+                <tr>
+                  <td><br/></td>
+                  <td><br/></td>
                 </tr>
                 <tr>
                   <td><b>Food Ordered</b></td>
                   <td><ul>
-                    <li>Ayam Goreng (1) - [Notes if any]</li>
-                    <li>Ice Cream (2) - [Notes if any]</li>
+                    {% for food in data.11 %}
+                    <li style="list-style-type: '{{ food.1 }}x ';">{{ food.0 }} - {{ food.2 }}</li>
+                    {% endfor %}
                   </ul></td>
                 </tr>
                 <tr>
                   <td><b>Total Food Price</b></td>
-                  <td>11000</td>
+                  <td>{{ data.12 }}</td>
                 </tr>
                 <tr>
                   <td><b>Total Discount</b></td>
-                  <td>0</td>
+                  <td>{{ data.13 }}%</td>
                 </tr>
                 <tr>
                   <td><b>Delivery Fee</b></td>
-                  <td>4000</td>
+                  <td>{{ data.14 }}</td>
                 </tr>
                 <tr>
                   <td><b>Total Cost</b></td>
-                  <td>15000</td>
+                  <td>{{ data.15 }}</td>
                 </tr>
                 <tr>
                   <td><b>Payment Method</b></td>
-                  <td>RestoPay</td>
+                  <td>{{ data.16 }}</td>
+                </tr>
+                <tr>
+                  <td><br/></td>
+                  <td><br/></td>
                 </tr>
                 <tr>
                   <td><b>Payment Status</b></td>
-                  <td>Succeed</td>
+                  <td>{{ data.17 }}</td>
                 </tr>
                 <tr>
                   <td><b>Order Status</b></td>
-                  <td>Order Delivery</td>
+                  <td>{{ data.18 }}</td>
+                </tr>
+                <tr>
+                  <td><br/></td>
+                  <td><br/></td>
                 </tr>
                 <tr>
                   <td><b>Courier</b></td>
-                  <td>Doni Suryana</td>
+                  <td>{{ data.19 }}</td>
                 </tr>
                 <tr>
                   <td><b>Number Plate</b></td>
-                  <td>B 0001 KNN</td>
+                  <td>{{ data.20 }}</td>
                 </tr>
                 <tr>
                   <td><b>Vehicle Type</b></td>
-                  <td>Motor</td>
+                  <td>{{ data.21 }}</td>
                 </tr>
                 <tr>
                   <td><b>Vehicle Brand</b></td>
-                  <td>Honda Vario</td>
+                  <td>{{ data.22 }}</td>
                 </tr>
               </tbody>
             </table>
@@ -196,6 +171,7 @@
       </div>
     </div>
   </div>
+  {% endfor %}
 </body>
 
 <!-- JavaScript Bundle with Popper -->
