@@ -405,8 +405,7 @@ def show_admindashboard(request):
     cursor = connection.cursor()
     search_path =  "set search_path to PUBLIC"
     cursor.execute(search_path)
-    #email = request.session.get('useremail')
-    email = 'kdoggrellf@taobao.com'
+    email = request.session.get('useremail')
     search_path =  "set search_path to SIREST"
     cursor.execute(search_path)
     SQL = f"""
