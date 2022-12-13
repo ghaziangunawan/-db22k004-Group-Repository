@@ -3,10 +3,12 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db import connection
 from django.core.exceptions import PermissionDenied
+from django.views.decorators.csrf import csrf_exempt
 
 ssp = 'set search_path to sirest'
 
 # Create your views here.
+@csrf_exempt
 def transaction_courier(request):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isCourier'): raise PermissionDenied()
@@ -161,6 +163,7 @@ def transaction_courier(request):
 
     return render(request, 'transaction_courier.html', context)
 
+@csrf_exempt
 def update_transaction_courier(request, hash):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isCourier'): raise PermissionDenied()

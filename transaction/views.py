@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-
+@csrf_exempt
 def show_transaction(request):
     email = request.session.get('useremail')   
     cursor = connection.cursor()
@@ -38,7 +39,7 @@ def show_transaction(request):
     response = {'transactions': fetchTransaction}
     return render(request, 'transaction.html',response) 
     
-
+@csrf_exempt
 def show_details(request,email):
     useremail = request.session.get('useremail')    
     cursor = connection.cursor()
@@ -81,6 +82,7 @@ def show_details(request,email):
     'transaction_status':fetchDetail[0][-6],'courier':fetchDetail[0][-5],'plateno':fetchDetail[0][-4],'vehicletype':fetchDetail[0][-2],'vehiclebrand':fetchDetail[0][-1] }
     return render(request, 'details.html',response)
 
+@csrf_exempt
 def set_status(request,email,datetime,status):
     cursor = connection.cursor()
     search_path = 'set search_path to sirest'

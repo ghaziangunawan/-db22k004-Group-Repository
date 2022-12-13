@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
-
+@csrf_exempt
 def show_restopay(request):
     # Start Copy Here For Login Required Function
     email = request.session.get('useremail')
@@ -28,6 +29,7 @@ def show_restopay(request):
     response = {'balance': str(fetchBalance[0][0])}
     return render(request, 'restopay.html',response)
 
+@csrf_exempt
 def show_withdraw(request):
     email = request.session.get('useremail')
     cursor = connection.cursor()
@@ -58,6 +60,7 @@ def show_withdraw(request):
         return response
     return render(request, 'withdraw.html',context)
 
+@csrf_exempt
 def show_topup(request):
     email = request.session.get('useremail')
     cursor = connection.cursor()

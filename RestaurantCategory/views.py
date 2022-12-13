@@ -3,10 +3,12 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db import connection
 from django.core.exceptions import PermissionDenied
+from django.views.decorators.csrf import csrf_exempt
 
 ssp = 'set search_path to sirest'
 
 # Create your views here.
+@csrf_exempt
 def rest_category_create(request):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
@@ -39,6 +41,7 @@ def rest_category_create(request):
 
     return render(request, 'rest_category_create.html')
 
+@csrf_exempt
 def rest_category_read(request):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
@@ -64,6 +67,7 @@ def rest_category_read(request):
 
     return render(request, 'rest_category_read.html', context)
 
+@csrf_exempt
 def delete_rest_cat(request, rest_cat_id):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()

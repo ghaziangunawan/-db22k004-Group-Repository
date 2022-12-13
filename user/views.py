@@ -3,12 +3,16 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
+
 
 def show_register(request):   
     return render(request, 'register.html')
 
+@csrf_exempt
 def show_adminform(request):
     errors = []
     cursor = connection.cursor()
@@ -58,6 +62,7 @@ def show_adminform(request):
     context = {'errors':errors}
     return render(request,'admin_form.html',context)
 
+@csrf_exempt
 def show_customerform(request):
     errors = []
     cursor = connection.cursor()
@@ -137,6 +142,7 @@ def show_customerform(request):
     context = {'errors':errors}
     return render(request,'register_customer.html',context)
 
+@csrf_exempt
 def show_restaurantform(request):
     errors = []
     cursor = connection.cursor()
@@ -225,7 +231,7 @@ def show_restaurantform(request):
     context = {'errors':errors,'rcategory':rcategory}
     return render(request,'register_rest.html',context)
     
-
+@csrf_exempt
 def show_courierform(request):
     errors = []
     cursor = connection.cursor()
@@ -288,6 +294,7 @@ def show_courierform(request):
     context = {'errors':errors}
     return render(request,'Courier_registration.html',context)
 
+@csrf_exempt
 def show_customerdashboard(request):
     cursor = connection.cursor()
     search_path =  "set search_path to PUBLIC"
@@ -323,6 +330,7 @@ def show_customerdashboard(request):
     context = {'usremail': usremail,'password': password,'name': name,'phone': phone,'nik': nik,'bank': bank,'accnum': accnum,'dob': dob,'gender': gender,'verified': verified,'admin': admin,'restopay': restopay}
     return render(request,'customerdashboard.html',context)
 
+@csrf_exempt
 def show_restaurantdashboard(request):
     cursor = connection.cursor()
     search_path =  "set search_path to PUBLIC"
@@ -369,6 +377,7 @@ def show_restaurantdashboard(request):
     context = {'usremail': usremail,'password': password, 'name': name,'phone': phone,'nik': nik,'bank': bank,'accnum': accnum,'rname': rname,'rbranch': rbranch,'rphone':rphone,'street':street,'district':district,'city':city,'province':province,'rating':rating,'category':category,'ophours':operating_hours,'verified': verified,'admin': admin,'restopay': restopay}
     return render(request,'restaurantdashboard.html',context)
 
+@csrf_exempt
 def show_courierdashboard(request):
     cursor = connection.cursor()
     search_path =  "set search_path to PUBLIC"
@@ -404,6 +413,7 @@ def show_courierdashboard(request):
     context = {'usremail': usremail,'password': password,'name': name,'phone': phone,'nik': nik,'bank': bank,'accnum': accnum,'plate': plate,'lisence': lisence,'type':type,'brand':brand,'verified': verified,'admin': admin,'restopay': restopay}
     return render(request,'courierdashboard.html',context)
 
+@csrf_exempt
 def show_admindashboard(request):
     cursor = connection.cursor()
     search_path =  "set search_path to PUBLIC"
@@ -477,7 +487,7 @@ def show_admindashboard(request):
     context = {'usremail': usremail,'password': password,'name': name,'phone': phone,'actors':transaction_Actor}
     return render(request,'admindashboard.html',context)
 
-
+@csrf_exempt
 def show_userprofile(request,role,email):
     cursor = connection.cursor()
     if role =='customer':
@@ -583,6 +593,7 @@ def show_userprofile(request,role,email):
         context = {'usremail': usremail,'password': password,'name': name,'phone': phone,'nik': nik,'bank': bank,'accnum': accnum,'plate': plate,'lisence': lisence,'type':type,'brand':brand,'verified': verified,'admin': admin,'restopay': restopay}
         return render(request,'courierprofile.html',context)
 
+@csrf_exempt
 def verification(request,email):
     cursor = connection.cursor()
     search_path =  "set search_path to sirest"

@@ -3,8 +3,9 @@ from django.urls import reverse
 from django.db import connection
 from django.core.exceptions import PermissionDenied
 # from delivery_fee.models import Task
+from django.views.decorators.csrf import csrf_exempt
 
-
+@csrf_exempt
 def show_deliveryfee(request):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
@@ -20,7 +21,7 @@ def show_deliveryfee(request):
     context = {'deliveryfee': deliveryfee}
     return render(request, 'deliveryfeeperkm.html', context)
 
-
+@csrf_exempt
 def create_deliveryfee(request):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
@@ -53,6 +54,7 @@ def create_deliveryfee(request):
 
     return render(request, "createdeliveryfeeperkm.html")
 
+@csrf_exempt
 def update_deliveryfee(request, id):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
@@ -85,7 +87,7 @@ def update_deliveryfee(request, id):
     return render(request, "updatedeliveryfeeperkm.html", context)
 
         
-
+@csrf_exempt
 def delete_deliveryfee(request, id):
     if not request.session.get('isLoggedIn'): return redirect('loginlogout:show_login')
     if not request.session.get('isAdmin'): raise PermissionDenied()
