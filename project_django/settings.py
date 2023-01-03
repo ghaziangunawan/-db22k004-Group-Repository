@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-3d64.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-3d64.up.railway.app']
 
 
 # Internationalization
